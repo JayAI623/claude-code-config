@@ -87,7 +87,10 @@ cmd_push() {
       --exclude='__pycache__' \
       --exclude='*.pyc' \
       --exclude='.DS_Store' \
+      --exclude='.git' \
       "$SKILLS_DIR/" "$staging/skills/"
+    # Remove any nested .git dirs that would confuse the outer repo
+    find "$staging/skills" -name '.git' -type d -maxdepth 3 -exec rm -rf {} + 2>/dev/null || true
     log "Skills synced: $(ls "$SKILLS_DIR" | wc -l | tr -d ' ') skills"
   fi
 
