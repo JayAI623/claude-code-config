@@ -2,6 +2,17 @@
 
 ## Primary Sources
 
+### 0. skills.sh (Official CLI Registry) ⭐ Search First
+- URL: https://skills.sh
+- Official open agent skills ecosystem, backed by Vercel Labs
+- Cross-platform: Claude Code, Codex, Cursor, OpenCode, and 37+ agents
+- **Search:** `npx skills find <query>` — interactive, returns ranked results with install commands
+- **List skills in a repo:** `npx skills add <owner/repo> --list`
+- **Install:** `npx skills add <owner/repo> --skill <name> -g -a claude-code -y`
+- Install format: `npx skills add vercel-labs/agent-skills@<skill-name>`
+- Skills installed to: `~/.agents/skills/` (symlinked to `~/.claude/skills/`)
+- Notable registries: `vercel-labs/agent-skills`, `ComposioHQ/awesome-claude-skills`
+
 ### 1. subagents.app
 - URL: https://subagents.app
 - Category browse: https://subagents.app/category/<category>
@@ -43,6 +54,7 @@
 
 | Need | Best Source |
 |------|-------------|
+| Any skill (start here) | skills.sh → `npx skills find <query>` |
 | Subagent templates | subagents.app |
 | Production-ready skills | claude-plugins.dev |
 | Community/niche skills | awesome-agent-skills, GitHub |

@@ -17,10 +17,15 @@ If the request is vague, ask one focused question:
 
 ### Step 2: Search All Sources in Parallel
 
-Run WebSearch queries simultaneously across all sources. See `references/sources.md` for full source list and search patterns.
+Run two tracks simultaneously:
 
-**Search queries to run (adapt `<topic>` to user's need):**
+**Track A — skills.sh CLI (run first, fastest):**
+```bash
+npx skills find <topic>
+```
+Returns ranked results with direct install commands. If 5+ strong matches found here, skip Track B.
 
+**Track B — WebSearch across other sources (run in parallel):**
 ```
 site:subagents.app <topic>
 site:claude-plugins.dev <topic>
@@ -32,6 +37,8 @@ site:github.com/VoltAgent/awesome-agent-skills <topic>
 ```
 
 For each GitHub result found, fetch the repo page to collect: star count, fork count, last updated date, and any download/usage stats mentioned.
+
+See `references/sources.md` for full source details and install patterns.
 
 ### Step 3: Score and Rank All Candidates
 
@@ -80,11 +87,17 @@ If fewer than 5 candidates found across all sources, show all found and note: "O
 
 ### Step 5: Install on Selection
 
-When user picks a number:
-1. Use `git clone` for GitHub-hosted skills/subagents (never WebFetch — it summarizes content)
-2. Use `curl` for single-file subagents with a direct raw URL
-3. Verify the installed file exists with `ls`
-4. Confirm: "Installed ✓ Restart Claude Code to activate."
+When user picks a number, choose install method based on source:
+
+| Source | Install command |
+|--------|----------------|
+| skills.sh / npx skills | `npx skills add <owner/repo> --skill <name> -g -a claude-code -y` |
+| GitHub repo | `git clone <url> ~/.claude/skills/<name>` |
+| Single subagent file | `curl -o ~/.claude/agents/<name>.md <raw-url>` |
+
+Never use WebFetch to download skill files — it summarizes content and loses raw fidelity.
+
+Verify with `ls` after install, then confirm: "Installed ✓ Restart Claude Code to activate."
 
 If nothing found at all: suggest using `agent-skill-creator` skill to build a custom one.
 
