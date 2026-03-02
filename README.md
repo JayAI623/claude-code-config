@@ -2,8 +2,8 @@
 
 My personal Claude Code configuration — skills, subagents, and settings.
 
-**Last synced:** 2026-03-02 00:20
-**Skills:** 21
+**Last synced:** 2026-03-02 12:04
+**Skills:** 22
 
 ## Install on a new machine
 
@@ -27,6 +27,7 @@ bash ~/.claude-code-config/install.sh
 - life-path-explorer
 - mcp-integration
 - notebooklm
+- oracle-openclaw-setup
 - playwright-disabled-element-click
 - plugin-settings
 - plugin-structure
