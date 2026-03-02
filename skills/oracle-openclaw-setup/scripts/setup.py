@@ -116,10 +116,17 @@ def gather_config() -> dict:
 
     # OpenRouter: optionally choose a model
     if llm == "openrouter":
-        console.print("\n  [dim]Popular models: openai/gpt-4o-mini · anthropic/claude-haiku-3 · google/gemini-flash-1.5 · meta-llama/llama-3.1-8b-instruct:free[/dim]")
+        console.print(
+            "\n  [dim]Recommended models:\n"
+            "    z-ai/glm-5                          — GLM-5, $0.06/M in (超便宜)\n"
+            "    moonshotai/kimi-k2.5                — Kimi K2.5, $0.45/M in\n"
+            "    moonshotai/kimi-k2:free             — Kimi K2 免费版\n"
+            "    google/gemini-flash-1.5             — Gemini Flash\n"
+            "    meta-llama/llama-3.1-8b-instruct:free — Llama 免费版[/dim]"
+        )
         openrouter_model = Prompt.ask(
             "  OpenRouter model (Enter to use OpenClaw default)",
-            default=cfg.get("openrouter_model", ""),
+            default=cfg.get("openrouter_model", "z-ai/glm-5"),
         )
         cfg["openrouter_model"] = openrouter_model
 

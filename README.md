@@ -2,7 +2,7 @@
 
 My personal Claude Code configuration — skills, subagents, and settings.
 
-**Last synced:** 2026-03-02 12:49
+**Last synced:** 2026-03-02 12:53
 **Skills:** 22
 
 ## Install on a new machine
