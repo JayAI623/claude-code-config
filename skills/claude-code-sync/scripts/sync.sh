@@ -83,7 +83,7 @@ cmd_push() {
   # Sync skills (exclude __pycache__ and .pyc)
   if [[ -d "$SKILLS_DIR" ]]; then
     mkdir -p "$staging/skills"
-    rsync -a --delete \
+    rsync -aL --delete \
       --exclude='__pycache__' \
       --exclude='*.pyc' \
       --exclude='.DS_Store' \
@@ -97,7 +97,7 @@ cmd_push() {
   # Sync agents
   if [[ -d "$AGENTS_DIR" ]]; then
     mkdir -p "$staging/agents"
-    rsync -a --delete --exclude='.DS_Store' "$AGENTS_DIR/" "$staging/agents/"
+    rsync -aL --delete --exclude='.DS_Store' "$AGENTS_DIR/" "$staging/agents/"
     log "Agents synced: $(ls "$AGENTS_DIR" | wc -l | tr -d ' ') agents"
   fi
 

@@ -165,6 +165,62 @@ python scripts/run.py notebook_manager.py stats
 python scripts/run.py ask_question.py --question "..." [--notebook-id ID] [--notebook-url URL] [--show-browser]
 ```
 
+### Studio Download (`studio_download.py`)
+
+List and download ANY already-generated Studio artifact (audio, slides, report, etc.):
+
+```bash
+python scripts/run.py studio_download.py             # interactive: lists all artifacts, pick one
+python scripts/run.py studio_download.py --index 0   # download first artifact
+python scripts/run.py studio_download.py --index 1   # download second artifact
+python scripts/run.py studio_download.py --output ~/Downloads/my-file.mp3
+```
+
+Automatically detects file format from the actual download response.
+
+### Studio Generator (`studio_generate.py`)
+
+Generate any Studio panel feature and auto-download when possible.
+
+```bash
+# List all available features
+python scripts/run.py studio_generate.py --list
+
+# Interactive menu (no args)
+python scripts/run.py studio_generate.py
+
+# Generate specific feature
+python scripts/run.py studio_generate.py --feature audio
+python scripts/run.py studio_generate.py --feature report --output ~/Downloads/report.pdf
+python scripts/run.py studio_generate.py --feature slides
+python scripts/run.py studio_generate.py --feature mindmap
+```
+
+| Feature key  | 中文名   | Studio图标             | 可下载 | 实际格式         |
+|-------------|---------|----------------------|--------|-----------------|
+| `audio`     | 音频概览  | `audio_magic_eraser` | ✅     | **m4a**（非mp3）|
+| `slides`    | 演示文稿  | `tablet`             | ✅     | pdf             |
+| `report`    | 报告      | `auto_tab_group`     | ✅     | pdf             |
+| `mindmap`   | 思维导图  | `flowchart`          | 👁️     | —               |
+| `flashcards`| 闪卡      | `cards_star`         | 👁️     | —               |
+| `video`     | 视频概览  | `subscriptions`      | 👁️     | —               |
+| `infographic`| 信息图   | `grid_view`          | ✅     | png             |
+| `table`     | 数据表格  | `table_chart`        | ✅     | csv             |
+| `quiz`      | 测验      | `quiz`               | 👁️     | —               |
+
+> ⚠️ **已验证的关键修正（2026-03-01）：**
+> - `tablet` 图标 = **演示文稿**，不是来源文档（之前错误地被 EXCLUDED_ICONS 过滤）
+> - 音频实际下载格式是 `.m4a`，不是 `.mp3`，始终用 `dl.suggested_filename` 获取真实格式
+> - 下载无直接按钮，必须通过 `more_vert`（更多）溢出菜单 → 点击"下载"
+> - Studio 面板需等待 **10秒** 加载完毕再查找 artifact 卡片
+> - Artifact 卡片识别：`<button>` 含 `{icon}\n{title}\n{N} 个来源` 文本
+> - 生成中状态：`sync\n正在生成{type}…` disabled button
+
+When user asks to generate audio/video/slides/mindmap/flashcards/report/quiz from NotebookLM:
+1. Use `studio_generate.py` with the matching `--feature` key
+2. For downloadable features, specify `--output` path
+3. Browser is always visible so user can see progress
+
 ### Data Cleanup (`cleanup_manager.py`)
 ```bash
 python scripts/run.py cleanup_manager.py                    # Preview cleanup
@@ -238,6 +294,10 @@ Synthesize and respond to user
 | Rate limit (50/day) | Wait or switch Google account |
 | Browser crashes | `python scripts/run.py cleanup_manager.py --preserve-library` |
 | Notebook not found | Check with `notebook_manager.py list` |
+| Download button not found | No direct button — use `studio_download.py` (via 更多 menu) |
+| Artifact not listed | `tablet` icon = 演示文稿，check `debug_all_cards.py` for real icon names |
+| Audio saves as wrong format | Use `suggested_filename`；实际格式是 `.m4a` 不是 `.mp3` |
+| Generate button click fails | Button disabled during page load；use JS fallback: `page.evaluate("(el) => el.click()", btn)` |
 
 ## Best Practices
 
