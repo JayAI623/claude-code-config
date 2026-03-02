@@ -2,8 +2,8 @@
 
 My personal Claude Code configuration — skills, subagents, and settings.
 
-**Last synced:** 2026-02-23 09:01
-**Skills:** 18
+**Last synced:** 2026-03-01 20:46
+**Skills:** 19
 
 ## Install on a new machine
 
@@ -25,6 +25,7 @@ bash ~/.claude-code-config/install.sh
 - hook-development
 - life-path-explorer
 - mcp-integration
+- notebooklm
 - plugin-settings
 - plugin-structure
 - remotion-best-practices
