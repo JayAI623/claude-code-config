@@ -114,6 +114,15 @@ def gather_config() -> dict:
         password=True,
     )
 
+    # OpenRouter: optionally choose a model
+    if llm == "openrouter":
+        console.print("\n  [dim]Popular models: openai/gpt-4o-mini · anthropic/claude-haiku-3 · google/gemini-flash-1.5 · meta-llama/llama-3.1-8b-instruct:free[/dim]")
+        openrouter_model = Prompt.ask(
+            "  OpenRouter model (Enter to use OpenClaw default)",
+            default=cfg.get("openrouter_model", ""),
+        )
+        cfg["openrouter_model"] = openrouter_model
+
     # ── Messaging platform ──
     console.print()
     t2 = Table(show_header=False, box=None, padding=(0, 2))

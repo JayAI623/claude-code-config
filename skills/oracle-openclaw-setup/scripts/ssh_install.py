@@ -85,6 +85,13 @@ def build_env_content(cfg: dict) -> str:
     if env_var and api_key:
         lines.append(f"{env_var}={api_key}")
 
+    # OpenRouter needs additional base URL + optional model selection
+    if cfg.get("llm_provider") == "openrouter":
+        lines.append("OPENROUTER_BASE_URL=https://openrouter.ai/api/v1")
+        model = cfg.get("openrouter_model", "")
+        if model:
+            lines.append(f"OPENROUTER_MODEL={model}")
+
     # Messaging platform token
     token_key = cfg.get("platform_token_key", "")
     token_val = cfg.get("platform_token", "")

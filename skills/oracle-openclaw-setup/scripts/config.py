@@ -30,9 +30,10 @@ USER_AGENT = (
 
 # LLM providers: key → (env var name, display label)
 LLM_PROVIDERS = {
-    "google":    ("GOOGLE_API_KEY",    "Gemini Flash-Lite — Free tier available"),
-    "anthropic": ("ANTHROPIC_API_KEY", "Claude Haiku 3   — ~$3/mo"),
-    "openai":    ("OPENAI_API_KEY",    "GPT-4o-mini      — ~$5/mo"),
+    "google":      ("GOOGLE_API_KEY",      "Gemini Flash-Lite  — Free tier available"),
+    "openrouter":  ("OPENROUTER_API_KEY",  "OpenRouter         — 300+ models, pay-per-use"),
+    "anthropic":   ("ANTHROPIC_API_KEY",   "Claude Haiku 3     — ~$3/mo"),
+    "openai":      ("OPENAI_API_KEY",      "GPT-4o-mini        — ~$5/mo"),
 }
 
 # Messaging platforms: key → env var name
