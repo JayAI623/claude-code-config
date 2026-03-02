@@ -28,6 +28,20 @@ from config import CONFIG_FILE, LLM_PROVIDERS, MESSAGING_PLATFORMS
 console = Console()
 
 
+def _require_tty():
+    """Exit with a helpful message if stdin is not a real terminal."""
+    if not sys.stdin.isatty():
+        console.print(Panel.fit(
+            "[bold red]⚠  Interactive terminal required[/bold red]\n\n"
+            "This wizard needs a real terminal for interactive prompts.\n"
+            "Run it directly in your shell:\n\n"
+            "  [bold cyan]cd ~/.claude/skills/oracle-openclaw-setup[/bold cyan]\n"
+            "  [bold cyan]python scripts/run.py setup.py[/bold cyan]",
+            border_style="red",
+        ))
+        sys.exit(1)
+
+
 # ── Config helpers ────────────────────────────────────────────────────────────
 
 def load_config() -> dict:
@@ -48,6 +62,8 @@ def save_config(cfg: dict):
 
 def gather_config() -> dict:
     cfg = load_config()
+
+    _require_tty()
 
     console.print(Panel.fit(
         "[bold cyan]🦞 Oracle Cloud + OpenClaw Setup Wizard[/bold cyan]\n"
