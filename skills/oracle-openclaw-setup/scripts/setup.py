@@ -118,7 +118,7 @@ def gather_config() -> dict:
     if llm == "openrouter":
         console.print(
             "\n  [dim]Recommended models:\n"
-            "    z-ai/glm-5                          — GLM-5, $0.06/M in (超便宜)\n"
+            "    z-ai/glm-5                          — GLM-5, $0.80/M in\n"
             "    moonshotai/kimi-k2.5                — Kimi K2.5, $0.45/M in\n"
             "    moonshotai/kimi-k2:free             — Kimi K2 免费版\n"
             "    google/gemini-flash-1.5             — Gemini Flash\n"
