@@ -2,8 +2,8 @@
 
 My personal Claude Code configuration — skills, subagents, and settings.
 
-**Last synced:** 2026-03-02 12:55
-**Skills:** 22
+**Last synced:** 2026-03-05 18:17
+**Skills:** 23
 
 ## Install on a new machine
 
@@ -36,6 +36,7 @@ bash ~/.claude-code-config/install.sh
 - skill-development
 - skill-finder
 - subagent-creator
+- youtube-transcript
 
 ## Agents included
 

@@ -250,6 +250,11 @@ def main():
         action="store_true",
         help="Edit configuration only (no browser or SSH)",
     )
+    parser.add_argument(
+        "--from-config",
+        action="store_true",
+        help="Skip interactive prompts — use saved data/config.json directly",
+    )
     args = parser.parse_args()
 
     # Config-only mode
@@ -257,8 +262,24 @@ def main():
         gather_config()
         return 0
 
-    # Phase 1: Config
-    cfg = gather_config()
+    # Phase 1: Config — interactive or from saved file
+    if args.from_config:
+        cfg = load_config()
+        if not cfg:
+            console.print("[red]❌ No saved config found at data/config.json[/red]")
+            console.print("   Run without --from-config to set up config first.")
+            return 1
+        console.print(Panel.fit(
+            f"[bold cyan]🦞 Oracle Cloud + OpenClaw[/bold cyan]\n"
+            f"Using saved config:\n"
+            f"  LLM      : [cyan]{cfg.get('llm_provider','?')}[/cyan] / {cfg.get('openrouter_model') or cfg.get('api_key_env','?')}\n"
+            f"  Platform : [cyan]{cfg.get('platform','?')}[/cyan]\n"
+            f"  Region   : [cyan]{cfg.get('region','?')}[/cyan]\n"
+            f"  SSH key  : [dim]{cfg.get('ssh_key','?')}[/dim]",
+            border_style="cyan",
+        ))
+    else:
+        cfg = gather_config()
 
     # Phase 2: Oracle Cloud
     ip = args.ip

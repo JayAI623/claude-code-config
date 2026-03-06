@@ -14,7 +14,8 @@ Trigger when user:
 - Shares NotebookLM URL (`https://notebooklm.google.com/notebook/...`)
 - Asks to query their notebooks/documentation
 - Wants to add documentation to NotebookLM library
-- Uses phrases like "ask my NotebookLM", "check my docs", "query my notebook"
+- Wants to upload files or YouTube videos to NotebookLM
+- Uses phrases like "ask my NotebookLM", "check my docs", "query my notebook", "upload to NotebookLM"
 
 ## ⚠️ CRITICAL: Add Command - Smart Discovery
 
@@ -221,6 +222,44 @@ When user asks to generate audio/video/slides/mindmap/flashcards/report/quiz fro
 2. For downloadable features, specify `--output` path
 3. Browser is always visible so user can see progress
 
+### Upload Sources (`upload_sources.py`)
+
+Upload local files and YouTube URLs as sources to a NotebookLM notebook. Automatically deduplicates — checks existing sources before inserting.
+
+```bash
+# Upload files to active notebook
+python scripts/run.py upload_sources.py --files file1.txt file2.md
+
+# Upload YouTube URL
+python scripts/run.py upload_sources.py --youtube "https://youtube.com/watch?v=..."
+
+# Upload both to a specific notebook
+python scripts/run.py upload_sources.py --notebook-url "https://notebooklm.google.com/notebook/..." \
+    --files file1.txt file2.md --youtube "https://youtube.com/watch?v=..."
+
+# Create a new notebook and upload
+python scripts/run.py upload_sources.py --new-notebook "My Notebook" \
+    --files file1.txt --youtube "https://youtube.com/watch?v=..."
+
+# Show browser for debugging
+python scripts/run.py upload_sources.py --files file1.txt --show-browser
+```
+
+**Key behaviors:**
+- Scans existing sources in the notebook sidebar before uploading
+- Skips files/URLs that already exist (deduplication by name/video ID)
+- Expands collapsed source panel automatically
+- Supports Chinese and English NotebookLM UI
+- For files: uses file chooser pattern via "上传文件" button
+- For YouTube: uses "网站" button → paste URL → click "插入"
+
+> ⚠️ **已验证的关键 selector（2026-03-04）：**
+> - Source names: `mat-icon.source-item-source-icon` sibling `<span>` elements
+> - Add source: `button:has-text('添加来源')`
+> - Upload file: `button:has-text('上传文件')` triggers file chooser
+> - Website/YouTube: `button:has-text('网站')` → `textarea[placeholder*='粘贴']` → `button:has-text('插入')`
+> - Panel may be collapsed; use `ensure_source_panel_visible()` first
+
 ### Data Cleanup (`cleanup_manager.py`)
 ```bash
 python scripts/run.py cleanup_manager.py                    # Preview cleanup
@@ -274,6 +313,8 @@ Check auth → python scripts/run.py auth_manager.py status
     ↓
 If not authenticated → python scripts/run.py auth_manager.py setup
     ↓
+If user wants to UPLOAD → python scripts/run.py upload_sources.py --files/--youtube ...
+    ↓
 Check/Add notebook → python scripts/run.py notebook_manager.py list/add (with --description)
     ↓
 Activate notebook → python scripts/run.py notebook_manager.py activate --id ID
@@ -298,6 +339,9 @@ Synthesize and respond to user
 | Artifact not listed | `tablet` icon = 演示文稿，check `debug_all_cards.py` for real icon names |
 | Audio saves as wrong format | Use `suggested_filename`；实际格式是 `.m4a` 不是 `.mp3` |
 | Generate button click fails | Button disabled during page load；use JS fallback: `page.evaluate("(el) => el.click()", btn)` |
+| Upload: source panel hidden | Source panel may be collapsed; `ensure_source_panel_visible()` auto-handles this |
+| Upload: duplicate sources | Script auto-deduplicates by scanning existing sources before inserting |
+| Upload: "添加来源" not found | Panel collapsed or page not loaded; increase wait time or use `--show-browser` |
 
 ## Best Practices
 
@@ -312,7 +356,6 @@ Synthesize and respond to user
 
 - No session persistence (each question = new browser)
 - Rate limits on free Google accounts (50 queries/day)
-- Manual upload required (user must add docs to NotebookLM)
 - Browser overhead (few seconds per question)
 
 ## Resources (Skill Structure)
