@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>|<opml version="2.0">|  <head><title>RSS Feeds</title></head>|  <body>
+    <outline type="rss" text="Anthropic Research" xmlUrl="https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_research.xml" htmlUrl="https://anthropic.com/research/feed_anthropic_research.xml"/>
+    <outline type="rss" text="GitHub All Languages Daily Trending" xmlUrl="https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml" htmlUrl="http://mshibanami.github.io/GitHubTrendingRSS"/>
+    <outline type="rss" text="OpenAI News" xmlUrl="https://openai.com/news/rss.xml" htmlUrl="https://openai.com/news"/>
+    <outline type="rss" text="OpenAI Research News" xmlUrl="https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_openai_research.xml" htmlUrl="https://openai.com/news/research"/>
+    <outline type="rss" text="https://mshibanami.github.io/GitHubTrendingRSS/monthly/all.xml" xmlUrl="https://mshibanami.github.io/GitHubTrendingRSS/monthly/all.xml" htmlUrl="https://mshibanami.github.io/GitHubTrendingRSS/monthly/all.xml"/>
+  </body>|</opml>

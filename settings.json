@@ -2,6 +2,5 @@
   "env": {
     "ENABLE_TOOL_SEARCH": "true"
   },
-  "model": "opus",
   "skipDangerousModePermissionPrompt": true
 }

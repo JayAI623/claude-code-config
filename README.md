@@ -2,8 +2,8 @@
 
 My personal Claude Code configuration — skills, subagents, and settings.
 
-**Last synced:** 2026-03-05 18:17
-**Skills:** 23
+**Last synced:** 2026-03-15 13:50
+**Skills:** 36
 
 ## Install on a new machine
 
@@ -14,6 +14,7 @@ bash ~/.claude-code-config/install.sh
 
 ## Skills included
 
+- agent-browser
 - agent-development
 - agent-skill-creator
 - claude-code-sync
@@ -21,22 +22,34 @@ bash ~/.claude-code-config/install.sh
 - command-development
 - context7
 - cover-generator
+- dogfood
+- electron
 - feynman-learn
 - find-skills
+- gog
 - hook-development
 - life-path-explorer
 - mcp-integration
+- miniflux-news
+- nanobanana
 - notebooklm
 - oracle-openclaw-setup
 - playwright-disabled-element-click
 - plugin-settings
 - plugin-structure
 - remotion-best-practices
+- rss-agent-viewer
+- rss-feed-fallback
 - skill-creator
 - skill-development
 - skill-finder
+- slack
 - subagent-creator
+- vercel-sandbox
+- wechat-decrypt
 - youtube-transcript
+- zlib-download
+- zlibrary-to-notebooklm
 
 ## Agents included
 

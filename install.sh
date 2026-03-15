@@ -34,4 +34,13 @@ if [[ -d "$SCRIPT_DIR/agents" ]]; then
 fi
 
 echo ""
+
+# RSS feeds
+if [[ -f "$SCRIPT_DIR/rss/feeds.opml" ]]; then
+  echo "Importing RSS feeds..."
+  npx -y rss-agent-viewer init 2>/dev/null || true
+  npx -y rss-agent-viewer import "$SCRIPT_DIR/rss/feeds.opml" && echo "  ✓ RSS feeds imported" \
+    || echo "  ⚠ RSS import failed. Run: npx -y rss-agent-viewer import $SCRIPT_DIR/rss/feeds.opml"
+fi
+
 echo "[install] Done. Restart Claude Code to activate."

@@ -88,6 +88,9 @@ cmd_push() {
       --exclude='*.pyc' \
       --exclude='.DS_Store' \
       --exclude='.git' \
+      --exclude='*.dmg' \
+      --exclude='*.pkg' \
+      --exclude='*.iso' \
       "$SKILLS_DIR/" "$staging/skills/"
     # Remove any nested .git dirs that would confuse the outer repo
     find "$staging/skills" -name '.git' -type d -maxdepth 3 -exec rm -rf {} + 2>/dev/null || true
@@ -99,6 +102,12 @@ cmd_push() {
     mkdir -p "$staging/agents"
     rsync -aL --delete --exclude='.DS_Store' "$AGENTS_DIR/" "$staging/agents/"
     log "Agents synced: $(ls "$AGENTS_DIR" | wc -l | tr -d ' ') agents"
+  fi
+
+  # Export RSS feeds (before git add -A)
+  RSS_EXPORT_SCRIPT="$SCRIPT_DIR/rss-export-opml.sh"
+  if [[ -f "$RSS_EXPORT_SCRIPT" ]]; then
+    bash "$RSS_EXPORT_SCRIPT" "$staging/rss/feeds.opml" || log "WARNING: RSS export failed (continuing)"
   fi
 
   # Generate install.sh
@@ -165,6 +174,15 @@ cmd_pull() {
   [[ -f "$staging/settings.json" ]] && cp "$staging/settings.json" "$CLAUDE_DIR/settings.json" && log "settings.json updated"
   [[ -f "$staging/CLAUDE.md" ]]     && cp "$staging/CLAUDE.md"     "$CLAUDE_DIR/CLAUDE.md"     && log "CLAUDE.md updated"
   [[ -f "$staging/keybindings.json" ]] && cp "$staging/keybindings.json" "$CLAUDE_DIR/keybindings.json" && log "keybindings.json updated"
+
+  # Import RSS feeds if OPML exists in repo
+  if [[ -f "$staging/rss/feeds.opml" ]]; then
+    log "Importing RSS feeds from rss/feeds.opml..."
+    npx -y rss-agent-viewer init 2>/dev/null || true
+    npx -y rss-agent-viewer import "$staging/rss/feeds.opml" \
+      && log "RSS feeds imported successfully" \
+      || log "WARNING: RSS import failed. Run manually: npx -y rss-agent-viewer import $staging/rss/feeds.opml"
+  fi
 
   log "Done. Installed: $installed new, skipped: $skipped already present."
   if (( installed > 0 )); then
@@ -245,6 +263,15 @@ if [[ -d "$SCRIPT_DIR/agents" ]]; then
 fi
 
 echo ""
+
+# RSS feeds
+if [[ -f "$SCRIPT_DIR/rss/feeds.opml" ]]; then
+  echo "Importing RSS feeds..."
+  npx -y rss-agent-viewer init 2>/dev/null || true
+  npx -y rss-agent-viewer import "$SCRIPT_DIR/rss/feeds.opml" && echo "  ✓ RSS feeds imported" \
+    || echo "  ⚠ RSS import failed. Run: npx -y rss-agent-viewer import $SCRIPT_DIR/rss/feeds.opml"
+fi
+
 echo "[install] Done. Restart Claude Code to activate."
 INSTALL
   chmod +x "$dir/install.sh"

@@ -1,0 +1,6 @@
+# Large binary files
+*.dmg
+*.pkg
+*.iso
+*.exe
+*.bin
