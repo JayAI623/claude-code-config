@@ -2,8 +2,8 @@
 
 My personal Claude Code configuration — skills, subagents, and settings.
 
-**Last synced:** 2026-03-17 23:19
-**Skills:** 38
+**Last synced:** 2026-03-17 23:51
+**Skills:** 39
 
 ## Install on a new machine
 
@@ -46,6 +46,7 @@ bash ~/.claude-code-config/install.sh
 - skill-finder
 - slack
 - subagent-creator
+- tailored-resume-generator
 - vercel-sandbox
 - wechat-decrypt
 - wechat-investment-summary
