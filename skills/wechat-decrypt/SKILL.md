@@ -145,6 +145,54 @@ if isinstance(content, bytes) and content[:4] == b'\x28\xb5\x2f\xfd':
 - **Message types**: 1=text, 3=image, 34=voice, 43=video, 47=emoji, 10000=system, 49=link/file
 - **Group message format**: `"wxid_xxx:\ncontent"` with sender prefix separated by `:\n`
 
+## This User's Setup (已配置好，直接可用)
+
+- **工作目录**: `~/Desktop/微信相关/wechat-decrypt/`
+- **Keys 文件**: `~/Desktop/微信相关/wechat-decrypt/all_keys.json`（已提取，无需重新扫描内存）
+- **解密库目录**: `~/Desktop/微信相关/wechat-decrypt/decrypted/`
+- **wxid**: `wxid_4626126261715_4986`
+
+**重要：数据库每天更新，使用前必须先重新解密：**
+
+```bash
+cd ~/Desktop/微信相关/wechat-decrypt
+python3 decrypt_db.py
+```
+
+然后用 sqlite3 直接查 `decrypted/` 下的数据库。
+
+### 查群消息标准流程
+
+```bash
+# 1. 重新解密（每次必做）
+cd ~/Desktop/微信相关/wechat-decrypt && python3 decrypt_db.py
+
+# 2. 算群的 MD5 表名
+python3 -c "import hashlib; print('Msg_' + hashlib.md5('26927313011@chatroom'.encode()).hexdigest())"
+
+# 3. 找到表所在的 message_*.db，查今天消息
+# 今天时间戳范围：strftime('%s', 'now', 'start of day') 到 now
+sqlite3 ~/Desktop/微信相关/wechat-decrypt/decrypted/message/message_0.db \
+  "SELECT createTime, talker, content FROM Msg_xxx WHERE createTime >= strftime('%s','now','start of day') ORDER BY createTime;"
+```
+
+### 贝版相关群列表
+
+| 群名 | username |
+|------|----------|
+| RWA 贝版投资俱乐部 | 26927313011@chatroom |
+| 贝版投资俱乐部Creative Financing | 26552422185@chatroom |
+| 贝版俱乐部 大饼铭文&L2 | 27899422963@chatroom |
+| 贝版 特斯拉投资 | 25877913860@chatroom |
+| 贝版 俱乐部AI群 | 27609622050@chatroom |
+| 贝版俱乐部股票交易群 | 27173218763@chatroom |
+| 贝版投资俱乐部西雅图群 | 26729310942@chatroom |
+| 贝版私人投资俱乐部 | 26421307056@chatroom |
+| 贝版投资俱乐部风投 | 25873310541@chatroom |
+| 贝版俱乐部 量子计算 | 26734024923@chatroom |
+| 贝版 贵金属逃顶群 | 26045425768@chatroom |
+| 贝版 太空经济 | 27191115774@chatroom |
+
 ## Files in This Skill
 
 | File | Description |

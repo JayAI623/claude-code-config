@@ -2,8 +2,8 @@
 
 My personal Claude Code configuration — skills, subagents, and settings.
 
-**Last synced:** 2026-03-15 13:50
-**Skills:** 36
+**Last synced:** 2026-03-17 23:19
+**Skills:** 38
 
 ## Install on a new machine
 
@@ -40,6 +40,7 @@ bash ~/.claude-code-config/install.sh
 - remotion-best-practices
 - rss-agent-viewer
 - rss-feed-fallback
+- ruview-esp32-setup
 - skill-creator
 - skill-development
 - skill-finder
@@ -47,6 +48,7 @@ bash ~/.claude-code-config/install.sh
 - subagent-creator
 - vercel-sandbox
 - wechat-decrypt
+- wechat-investment-summary
 - youtube-transcript
 - zlib-download
 - zlibrary-to-notebooklm
