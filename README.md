@@ -2,8 +2,8 @@
 
 My personal Claude Code configuration — skills, subagents, and settings.
 
-**Last synced:** 2026-03-17 23:51
-**Skills:** 39
+**Last synced:** 2026-03-17 23:54
+**Skills:** 35
 
 ## Install on a new machine
 
@@ -33,8 +33,6 @@ bash ~/.claude-code-config/install.sh
 - miniflux-news
 - nanobanana
 - notebooklm
-- oracle-openclaw-setup
-- playwright-disabled-element-click
 - plugin-settings
 - plugin-structure
 - remotion-best-practices
@@ -51,8 +49,6 @@ bash ~/.claude-code-config/install.sh
 - wechat-decrypt
 - wechat-investment-summary
 - youtube-transcript
-- zlib-download
-- zlibrary-to-notebooklm
 
 ## Agents included
 

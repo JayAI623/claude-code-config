@@ -1,6 +1,0 @@
-.env
-.env.*
-*.pyc
-__pycache__/
-.cache/
-config.json
